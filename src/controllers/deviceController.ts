@@ -4,8 +4,9 @@ import { deviceRepository } from '../entities'
 
 export const createDevice = async (req: Request, res: Response): Promise<void> => {
     try {
-        const device = await deviceRepository.create(req.body)
-        res.status(201).json(device)
+        const device = deviceRepository.create(req.body)
+        const results = await deviceRepository.save(device)
+        res.status(201).json(results)
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Server Error' })
@@ -44,7 +45,7 @@ export const updateDevice = async (req: Request, res: Response): Promise<void> =
         if (device) {
             const body = req.body
             await deviceRepository.update(id, body)
-            res.status(200).json(device)
+            res.status(200).json({ id: device.id, ...body })
         } else {
             res.status(404).json({ message: 'Device not found' })
         }
@@ -59,8 +60,8 @@ export const deleteDevice = async (req: Request, res: Response): Promise<void> =
         const id = parseInt(req.params.id)
         const device = await deviceRepository.findOneBy({ id: id })
         if (device) {
-            await deviceRepository.delete(id)
-            res.status(204).end()
+            const results = await deviceRepository.delete(id)
+            res.status(204).json(results)
         } else {
             res.status(404).json({ message: 'Device not found' })
         }
