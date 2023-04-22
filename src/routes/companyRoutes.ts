@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import { createCompany, getAllCompanies, getCompanyById, updateCompany, deleteCompany } from '../controllers/companyController'
 
 const router = Router()
