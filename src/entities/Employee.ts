@@ -1,12 +1,20 @@
-import { Entity, Column, ManyToOne, OneToMany, Unique } from 'typeorm'
+import { Entity, Column, ManyToOne, OneToMany, Unique, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
-import { Base } from '.'
-import { Company } from './Company'
-import { DeviceLog } from './DeviceLog'
+import Company from './Company'
+import DeviceLog from './DeviceLog'
 
 @Entity()
 @Unique(['name'])
-export class Employee extends Base {
+export class Employee {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
+
     @Column()
     name: string
 
@@ -18,3 +26,5 @@ export class Employee extends Base {
     @OneToMany(() => DeviceLog, (deviceLog) => deviceLog.employee)
     logs: DeviceLog[]
 }
+
+export default Employee

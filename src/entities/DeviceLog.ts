@@ -1,11 +1,19 @@
-import { Entity, Column, ManyToOne, JoinTable } from 'typeorm'
+import { Entity, Column, ManyToOne, JoinTable, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
-import { Base } from '.'
-import { Device } from './Device'
-import { Employee } from './Employee'
+import Device from './Device'
+import Employee from './Employee'
 
 @Entity()
-export class DeviceLog extends Base {
+export class DeviceLog {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
+
     @Column()
     checkedOutCondition: string
 
@@ -24,3 +32,5 @@ export class DeviceLog extends Base {
     @JoinTable()
     employee: Employee
 }
+
+export default DeviceLog

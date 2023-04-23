@@ -1,13 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Column, OneToMany, Unique } from 'typeorm'
 
-import { Device } from './Device'
-import { Employee } from './Employee'
+import Device from './Device'
+import Employee from './Employee'
 
 @Entity()
 @Unique(['name'])
-export class Company {
+class Company {
     @PrimaryGeneratedColumn()
     id: number
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
 
     @Column()
     name: string
@@ -22,3 +28,5 @@ export class Company {
     })
     employees: Employee[]
 }
+
+export default Company

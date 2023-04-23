@@ -1,11 +1,19 @@
-import { Entity, Column, ManyToOne, OneToMany, JoinTable } from 'typeorm'
+import { Entity, Column, ManyToOne, OneToMany, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
-import { Base } from '.'
-import { Company } from './Company'
-import { DeviceLog } from './DeviceLog'
+import Company from './Company'
+import DeviceLog from './DeviceLog'
 
 @Entity()
-export class Device extends Base {
+class Device {
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @CreateDateColumn()
+    createdAt: Date
+
+    @UpdateDateColumn()
+    updatedAt: Date
+
     @Column()
     name: string
 
@@ -25,3 +33,5 @@ export class Device extends Base {
     })
     logs: DeviceLog[]
 }
+
+export default Device
