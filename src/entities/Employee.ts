@@ -18,6 +18,9 @@ export class Employee {
     @Column()
     name: string
 
+    @Column()
+    companyId: number
+
     @ManyToOne(() => Company, (company) => company.employees, {
         onDelete: 'CASCADE',
     })
