@@ -1,12 +1,22 @@
 import { Request, Response } from 'express'
 
-import { deviceRepository } from '../entities'
+import { companyRepository, deviceRepository } from '../entities'
 
 export const createDevice = async (req: Request, res: Response): Promise<void> => {
     try {
-        const device = deviceRepository.create(req.body)
-        const results = await deviceRepository.save(device)
-        res.status(201).json(results)
+        const companyId = req.body.companyId
+        if (!companyId) res.status(403).json('Company id missing')
+        else {
+            const company = await companyRepository.findOneBy({ id: companyId })
+            if (!company) {
+                res.status(404).json({ message: `Company not found with id ${companyId}` })
+                return
+            } else {
+                const device = deviceRepository.create(req.body)
+                const results = await deviceRepository.save(device)
+                res.status(201).json(results)
+            }
+        }
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Server Error' })
