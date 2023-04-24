@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/employees', employeeRoutes)
 app.use('/devices', deviceRoutes)
 app.use('/companies', companyRoutes)
-app.use('/checkouts', checkoutRoutes)
+app.use('/', checkoutRoutes)
 
 // root
 app.get('/', async (_req: Request, res: Response) => {
