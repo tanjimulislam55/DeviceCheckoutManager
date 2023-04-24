@@ -20,13 +20,15 @@ class Company {
 
     @OneToMany(() => Device, (device) => device.company, {
         cascade: true,
+        lazy: true,
     })
-    devices: Device[]
+    devices: Promise<Device[]>
 
     @OneToMany(() => Employee, (employee) => employee.company, {
         cascade: true,
+        lazy: true,
     })
-    employees: Employee[]
+    employees: Promise<Employee[]>
 }
 
 export default Company
