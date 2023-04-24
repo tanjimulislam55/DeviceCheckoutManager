@@ -65,7 +65,7 @@ export const deleteCompany = async (req: Request, res: Response): Promise<void> 
         const company = await companyRepository.findOneBy({ id: id })
         if (company) {
             await companyRepository.delete(id)
-            res.status(204).json(`${company.name} has been deleted`)
+            res.status(202).json(`${company.name} has been deleted`)
         } else {
             res.status(404).json({ message: 'Company not found' })
         }
