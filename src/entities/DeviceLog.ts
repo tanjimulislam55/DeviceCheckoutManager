@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinTable, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 
 import Device from './Device'
 import Employee from './Employee'
@@ -33,13 +33,11 @@ export class DeviceLog {
     @ManyToOne(() => Device, (device) => device.logs, {
         onDelete: 'CASCADE',
     })
-    @JoinTable()
     device: Device
 
     @ManyToOne(() => Employee, (employee) => employee.logs, {
         onDelete: 'SET NULL',
     })
-    @JoinTable()
     employee: Employee
 }
 
