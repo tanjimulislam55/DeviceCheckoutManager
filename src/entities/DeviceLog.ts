@@ -20,7 +20,9 @@ export class DeviceLog {
     @Column()
     returnedCondition: string
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     employeeId: number
 
     @Column()
