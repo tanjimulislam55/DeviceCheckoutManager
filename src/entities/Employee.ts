@@ -26,8 +26,10 @@ export class Employee {
     })
     company: Company
 
-    @OneToMany(() => DeviceLog, (deviceLog) => deviceLog.employee)
-    logs: DeviceLog[]
+    @OneToMany(() => DeviceLog, (deviceLog) => deviceLog.employee, {
+        lazy: true,
+    })
+    logs: Promise<DeviceLog[]>
 }
 
 export default Employee
