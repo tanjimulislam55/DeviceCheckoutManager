@@ -23,6 +23,9 @@ class Device {
     @Column()
     isAvailable: boolean
 
+    @Column()
+    companyId: number
+
     @ManyToOne(() => Company, (company) => company.devices, {
         onDelete: 'CASCADE',
     })
