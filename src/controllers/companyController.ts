@@ -31,6 +31,8 @@ export const getCompanyById = async (req: Request, res: Response): Promise<void>
     try {
         const id = parseInt(req.params.id)
         const company = await companyRepository.findOneBy({ id: id })
+        await company?.devices
+        await company?.employees
         if (company) {
             res.status(200).json(company)
         } else {
