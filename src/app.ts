@@ -1,18 +1,33 @@
-import * as express from 'express'
+import express, { Request, Response } from 'express'
 import helmet from 'helmet'
-import * as cors from 'cors'
+import cors from 'cors'
 import 'reflect-metadata'
 require('dotenv').config()
 
-import { AppDataSource } from './data-source'
+import employeeRoutes from './routes/employeeRoutes'
+import deviceRoutes from './routes/deviceRoutes'
+import companyRoutes from './routes/companyRoutes'
+import checkoutRoutes from './routes/deviceCheckoutRoutes'
+import AppDataSource from './ormconfig'
 
 const app = express()
 
-// Middlewares
+// middlewares
 app.use(helmet())
-app.use(cors())
+app.use(cors<Request>())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// routes
+app.use('/employees', employeeRoutes)
+app.use('/devices', deviceRoutes)
+app.use('/companies', companyRoutes)
+app.use('/checkouts', checkoutRoutes)
+
+// root
+app.get('/', async (_req: Request, res: Response) => {
+    res.json({ message: 'welcome!' })
+})
 
 const PORT = process.env.PORT || 5000
 
