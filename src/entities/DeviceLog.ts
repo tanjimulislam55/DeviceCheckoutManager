@@ -17,7 +17,9 @@ export class DeviceLog {
     @Column()
     checkedOutCondition: string
 
-    @Column()
+    @Column({
+        nullable: true,
+    })
     returnedCondition: string
 
     @Column({
