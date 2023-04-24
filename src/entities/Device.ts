@@ -33,8 +33,9 @@ class Device {
 
     @OneToMany(() => DeviceLog, (deviceLog) => deviceLog.device, {
         cascade: true,
+        lazy: true,
     })
-    logs: DeviceLog[]
+    logs: Promise<DeviceLog[]>
 }
 
 export default Device
