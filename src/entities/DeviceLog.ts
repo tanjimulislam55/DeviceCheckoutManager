@@ -20,6 +20,12 @@ export class DeviceLog {
     @Column()
     returnedCondition: string
 
+    @Column()
+    employeeId: number
+
+    @Column()
+    deviceId: number
+
     @ManyToOne(() => Device, (device) => device.logs, {
         onDelete: 'CASCADE',
     })
