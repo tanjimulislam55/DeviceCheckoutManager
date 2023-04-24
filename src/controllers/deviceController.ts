@@ -37,6 +37,7 @@ export const getDeviceById = async (req: Request, res: Response): Promise<void> 
     try {
         const id = parseInt(req.params.id)
         const device = await deviceRepository.findOneBy({ id: id })
+        await device?.logs
         if (device) {
             res.status(200).json(device)
         } else {
