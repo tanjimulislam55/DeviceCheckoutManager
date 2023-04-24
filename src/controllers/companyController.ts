@@ -4,9 +4,13 @@ import { companyRepository } from '../entities'
 
 export const createCompany = async (req: Request, res: Response): Promise<void> => {
     try {
-        const company = companyRepository.create(req.body)
-        const results = await companyRepository.save(company)
-        res.status(201).json(results)
+        const existingCompany = await companyRepository.findOne({ where: { name: req.body.name } })
+        if (existingCompany) res.status(403).json('Name already exists')
+        else {
+            const company = companyRepository.create(req.body)
+            const results = await companyRepository.save(company)
+            res.status(201).json(results)
+        }
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Server Error' })
@@ -60,8 +64,8 @@ export const deleteCompany = async (req: Request, res: Response): Promise<void> 
         const id = parseInt(req.params.id)
         const company = await companyRepository.findOneBy({ id: id })
         if (company) {
-            const results = await companyRepository.delete(id)
-            res.status(204).json(results)
+            await companyRepository.delete(id)
+            res.status(204).json(`${company.name} has been deleted`)
         } else {
             res.status(404).json({ message: 'Company not found' })
         }
