@@ -8,6 +8,7 @@ import employeeRoutes from './routes/employeeRoutes'
 import deviceRoutes from './routes/deviceRoutes'
 import companyRoutes from './routes/companyRoutes'
 import checkoutRoutes from './routes/deviceCheckoutRoutes'
+import userRoutes from './routes/userRoutes'
 import AppDataSource from './ormconfig'
 
 const app = express()
@@ -23,6 +24,7 @@ app.use('/employees', employeeRoutes)
 app.use('/devices', deviceRoutes)
 app.use('/companies', companyRoutes)
 app.use('/', checkoutRoutes)
+app.use('/users', userRoutes)
 
 // root
 app.get('/', async (_req: Request, res: Response) => {
