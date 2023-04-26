@@ -18,15 +18,6 @@ class Company {
     @Column()
     name: string
 
-    @Column()
-    isSuperUser: boolean
-
-    @Column({ unique: true })
-    email: string
-
-    @Column()
-    password: string
-
     @OneToMany(() => Device, (device) => device.company, {
         cascade: true,
         lazy: true,
