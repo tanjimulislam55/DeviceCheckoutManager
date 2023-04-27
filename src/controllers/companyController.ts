@@ -4,7 +4,7 @@ import { companyRepository } from '../entities'
 import User from '../entities/User'
 
 interface AuthenticatedRequest extends Request {
-    user: User | {}
+    user: User
 }
 
 export const createCompany = async (req: Request, res: Response): Promise<void> => {
