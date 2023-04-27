@@ -1,12 +1,14 @@
 import { Router } from 'express'
+
 import { createDevice, getAllDevices, getDeviceById, updateDevice, deleteDevice } from '../controllers/deviceController'
+import { getAuthenticatedUser, getAuthenticatedSuperUser } from '../middlewares/auth'
 
 const router = Router()
 
-router.post('/', createDevice)
-router.get('/', getAllDevices)
-router.get('/:id', getDeviceById)
-router.put('/:id', updateDevice)
-router.delete('/:id', deleteDevice)
+router.post('/', getAuthenticatedUser, createDevice)
+router.get('/', getAuthenticatedUser, getAllDevices)
+router.get('/:id', getAuthenticatedUser, getDeviceById)
+router.put('/:id', getAuthenticatedUser, updateDevice)
+router.delete('/:id', getAuthenticatedSuperUser, deleteDevice)
 
 export default router
