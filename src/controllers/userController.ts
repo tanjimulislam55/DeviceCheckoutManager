@@ -6,6 +6,10 @@ import { comparePassword, createToken, encryptPassword } from '../utils/auth'
 export const signup = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body
+        if (!email || !password) {
+            res.status(403).json('Fields required for email and password')
+            return
+        }
         const existingUser = await userRepository.findOne({ where: { email: email } })
         if (existingUser) res.status(403).json('Email already in use')
         else {
@@ -34,16 +38,22 @@ export const signin = async (req: Request, res: Response): Promise<void> => {
         }
 
         const isVerified = await comparePassword(user.password, password)
+        console.log(user.password, password, isVerified)
         if (!isVerified) {
             res.status(403).json({ message: 'Incorrect password' })
             return
         } else {
             const jwt = createToken(user, 'ACCESS_TOKEN')
-            res.status(200).cookie('accessToken', jwt).json({
-                success: true,
-                status: 'green',
-                user: user,
-            })
+            res.status(200)
+                .cookie('token', jwt, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    secure: true,
+                })
+                .json({
+                    id: user.id,
+                    email: user.email,
+                })
         }
     } catch (err) {
         console.error(err)
