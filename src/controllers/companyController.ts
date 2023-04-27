@@ -35,7 +35,7 @@ export const getAllCompanies = async (_req: Request, res: Response): Promise<voi
 export const getCompanyById = async (req: Request, res: Response): Promise<void> => {
     try {
         const authenticatedReq = req as AuthenticatedRequest
-        const id = parseInt(req.params.id)
+        const id = parseInt(authenticatedReq.params.id)
         const company = await companyRepository.findOneBy({ id: id })
         await company?.devices
         await company?.employees
