@@ -1,18 +1,14 @@
-import { Router } from 'express';
-import {
-  createEmployee,
-  getAllEmployees,
-  getEmployeeById,
-  updateEmployee,
-  deleteEmployee
-} from '../controllers/employeeController';
+import { Router } from 'express'
 
-const router = Router();
+import { createEmployee, getAllEmployees, getEmployeeById, updateEmployee, deleteEmployee } from '../controllers/employeeController'
+import { getAuthenticatedUser, getAuthenticatedSuperUser } from '../middlewares/auth'
 
-router.post('/', createEmployee);
-router.get('/', getAllEmployees);
-router.get('/:id', getEmployeeById);
-router.put('/:id', updateEmployee);
-router.delete('/:id', deleteEmployee);
+const router = Router()
 
-export default router;
+router.post('/', getAuthenticatedUser, createEmployee)
+router.get('/', getAuthenticatedUser, getAllEmployees)
+router.get('/:id', getAuthenticatedUser, getEmployeeById)
+router.put('/:id', getAuthenticatedUser, updateEmployee)
+router.delete('/:id', getAuthenticatedSuperUser, deleteEmployee)
+
+export default router
